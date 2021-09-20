@@ -1,8 +1,8 @@
-package uk.org.websolution.weatherapp
+package uk.org.websolution.weatherapp.ui.main.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import uk.org.websolution.weatherapp.ui.main.MainFragment
+import uk.org.websolution.weatherapp.R
 
 class MainActivity : AppCompatActivity() {
 
