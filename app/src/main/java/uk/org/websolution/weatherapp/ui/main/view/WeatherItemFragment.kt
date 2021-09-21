@@ -1,16 +1,12 @@
-/*
 package uk.org.websolution.weatherapp.ui.main.view
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.google.android.material.snackbar.Snackbar
 import uk.org.websolution.weatherapp.R
 import uk.org.websolution.weatherapp.databinding.FragmentWeatherItemBinding
-import uk.org.websolution.weatherapp.ui.main.viewmodel.AppState
 import uk.org.websolution.weatherapp.ui.main.viewmodel.MainViewModel
 import uk.org.websolution.weatherapp.ui.main.model.Weather
 
@@ -48,10 +44,10 @@ class WeatherItemFragment : Fragment() {
     }
     companion object {
         const val BUNDLE_EXTRA = "weather"
-        fun newInstance(bundle: Bundle): DetailsFragment {
-            val fragment = DetailsFragment()
+        fun newInstance(bundle: Bundle): WeatherItemFragment {
+            val fragment = WeatherItemFragment()
             fragment.arguments = bundle
             return fragment
         }
     }
-}*/
+}

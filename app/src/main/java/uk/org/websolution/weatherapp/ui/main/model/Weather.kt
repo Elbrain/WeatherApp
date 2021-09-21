@@ -1,12 +1,16 @@
 package uk.org.websolution.weatherapp.ui.main.model
 
-data class Weather(
-    val city: City = getDefaultcity(),
-    val temperature: Int = 1,
-    val feelsLike: Int = 0
-)
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
-fun getDefaultcity(): City {
+@Parcelize
+data class Weather(
+    val city: City = getDefaultCity(),
+    val temperature: Int = 0,
+    val feelsLike: Int = 0
+) : Parcelable
+
+fun getDefaultCity(): City {
     return City("Москва", 55.755826, 37.617299900000035)
 }
 
