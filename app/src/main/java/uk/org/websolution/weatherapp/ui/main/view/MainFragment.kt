@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import uk.org.websolution.weatherapp.R
 import uk.org.websolution.weatherapp.databinding.FragmentMainBinding
+import uk.org.websolution.weatherapp.ui.main.model.Weather
 import uk.org.websolution.weatherapp.ui.main.viewmodel.AppState
 import uk.org.websolution.weatherapp.ui.main.viewmodel.MainViewModel
 
@@ -21,7 +22,19 @@ class MainFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var viewModel: MainViewModel
-    private val adapter = MainFragmentAdapter()
+    private val adapter = MainFragmentAdapter(object : OnItemViewClickListener {
+        override fun onItemViewClick(weather: Weather) {
+            val manager = activity?.supportFragmentManager
+            if (manager != null) {
+                val bundle = Bundle()
+                bundle.putParcelable(WeatherItemFragment.BUNDLE_EXTRA, weather)
+                manager.beginTransaction()
+                    .replace(R.id.container, WeatherItemFragment.newInstance(bundle))
+                    .addToBackStack("")
+                    .commitAllowingStateLoss()
+            }
+        }
+    })
     private var isDataSetRus: Boolean = true
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,7 +49,7 @@ class MainFragment : Fragment() {
         binding.mainFragmentRecyclerView.adapter = adapter
         binding.mainFragmentFAB.setOnClickListener { changeWeatherDataSet() }
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        viewModel.getLiveData().observe(viewLifecycleOwner, Observer {
+        viewModel.getLiveData().observe(viewLifecycleOwner, {
             renderData(it as AppState)
         })
         viewModel.getWeatherFromLocalSourceRus()
@@ -47,7 +60,7 @@ class MainFragment : Fragment() {
             viewModel.getWeatherFromLocalSourceWorld()
             //binding.mainFragmentFAB.setImageResource(R.drawable.ic_earth)
         } else {
-            viewModel.getLiveData()
+            viewModel.getWeatherFromLocalSourceRus()
             //binding.mainFragmentFAB.setImageResource(R.drawable.ic_russia)
         }
         isDataSetRus = !isDataSetRus
@@ -75,5 +88,9 @@ class MainFragment : Fragment() {
                     .show()
             }
         }
+    }
+
+    interface OnItemViewClickListener {
+        fun onItemViewClick(weather: Weather)
     }
 }
