@@ -49,7 +49,7 @@ class MainFragment : Fragment() {
         binding.mainFragmentRecyclerView.adapter = adapter
         binding.mainFragmentFAB.setOnClickListener { changeWeatherDataSet() }
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        viewModel.getLiveData().observe(viewLifecycleOwner, Observer {
+        viewModel.getLiveData().observe(viewLifecycleOwner, {
             renderData(it as AppState)
         })
         viewModel.getWeatherFromLocalSourceRus()
@@ -60,7 +60,7 @@ class MainFragment : Fragment() {
             viewModel.getWeatherFromLocalSourceWorld()
             //binding.mainFragmentFAB.setImageResource(R.drawable.ic_earth)
         } else {
-            viewModel.getLiveData()
+            viewModel.getWeatherFromLocalSourceRus()
             //binding.mainFragmentFAB.setImageResource(R.drawable.ic_russia)
         }
         isDataSetRus = !isDataSetRus
